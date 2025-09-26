@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Variables
 {
     public partial class FrmLogin : Form
     {
+        private int count = 0;
         public FrmLogin()
         {
             InitializeComponent();
@@ -46,8 +48,20 @@ namespace Variables
         {
             if (Login(tbUser.Text, tbPassword.Text))
             {
-                new Form1().Show();
-                this.Hide();
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+                //new FrmPrincipal().Show()
+                //this.Hide();
+            }
+            else
+            {
+                count += 1;
+                MessageBox.Show("Contrasena invalida");
+            }
+            if (count >= 3)
+            {
+                MessageBox.Show("Se bloqueo el usuario", "Bloqueo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
 
         }
